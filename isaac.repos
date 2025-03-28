@@ -12,10 +12,16 @@ repositories:
     type: git
     url: https://github.com/NVIDIA-ISAAC-ROS/isaac_ros_common.git
     version: v3.1.0
-  
+  # image_pipeline
   image_pipeline/isaac_ros_compression:
     type: git
     url: https://github.com/NVIDIA-ISAAC-ROS/isaac_ros_compression.git
     version: v3.1.0
+  image_pipeline/isaac_ros_argus_camera:
+    type: git
+    url: https://github.com/NVIDIA-ISAAC-ROS/isaac_ros_argus_camera.git
+    version: v3.1.0
 
-#  mkdir src && vcs import src < isaac.repos
+# mkdir src 
+# vcs import src < isaac.repos
+# vcs pull src
