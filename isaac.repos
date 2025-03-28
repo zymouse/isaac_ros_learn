@@ -21,6 +21,10 @@ repositories:
     type: git
     url: https://github.com/NVIDIA-ISAAC-ROS/isaac_ros_argus_camera.git
     version: v3.1.0
+  image_pipeline/isaac_ros_v4l2_camera:
+    type: git
+    url: https://github.com/pixmoving-moveit/isaac_ros_v4l2_camera.git
+    version: main
 
 # mkdir src 
 # vcs import src < isaac.repos
