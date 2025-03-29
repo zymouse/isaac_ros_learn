@@ -1,7 +1,8 @@
 # Vim
 *.swp
 *.swo
-
+*.elf 
+*.o
 # Visual Studio Code
 .vscode/
 *.code-workspace
