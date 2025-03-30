@@ -41,7 +41,7 @@ private:
     header.stamp = this->now();
     header.frame_id = "camera_frame";
 
-    sensor_msgs::msg::Image::SharedPtr msg = cv_bridge::CvImage(header, "rgba8", rgba_frame).toImageMsg();
+    sensor_msgs::msg::Image::SharedPtr msg = cv_bridge::CvImage(header, "bgra8", rgba_frame).toImageMsg();
     publisher_->publish(*msg);
   }
 

@@ -36,7 +36,7 @@ target_link_libraries(rgba_publisher_node
 )
 
 # zero-copy的发布订阅 ------------------------------------------
-ament_auto_add_library(rgba_show_zero_node 
+ament_auto_add_library(rgba_show_zero_node SHARED
   src/rgba_show_zero.cpp
 )
 target_include_directories(rgba_show_zero_node PRIVATE
@@ -67,7 +67,10 @@ target_link_libraries(rgba_publisher_zero_node
 
 # install ------------------------------------------------
 install(TARGETS
+  rgba_publisher_node
   rgba_show_node
+  rgba_publisher_zero_node
+  rgba_show_zero_node
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION lib
