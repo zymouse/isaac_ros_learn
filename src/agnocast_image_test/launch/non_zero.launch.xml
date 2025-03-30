@@ -1,0 +1,10 @@
+<launch>
+  <node pkg="agnocast_image_test" exec="rgba_publisher_node" name="rgba_publisher_node" output="screen">
+    <arg name="image_topic" value="/camera/image_raw" />
+  </node>
+
+  <node pkg="agnocast_image_test" exec="rgba_show_node" name="rgba_show_node" output="screen">
+    <arg name="image_topic" value="/camera/image_raw" />
+  </node>
+
+</launch>

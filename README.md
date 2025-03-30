@@ -1,8 +1,19 @@
-# nvidia加速硬件学习记录
+## Manual Installation - zero-copy
 
-v3.1.0对应jetpack6.0
+```bash
+agnocast_version="1.0.2"
 
-## demo
-### step-1: 输出UYVY原始图像
-### step-2: 编写ROS组件-(颜色空间转换+压缩)
-### step-3: 输出压缩图
+sudo add-apt-repository -y ppa:t4-system-software/agnocast
+sudo apt update
+sudo apt install -y "agnocast-heaphook=${agnocast_version}*"
+
+if dkms status | grep agnocast | grep -q "${agnocast_version}"; then
+    echo "agnocast-kmod version ${agnocast_version} is already registered in dkms. Skipping purge and install."
+else
+    sudo apt purge -y "agnocast-kmod=${agnocast_version}*"
+    sudo apt install -y "agnocast-kmod=${agnocast_version}*"
+fi
+
+```
+
+## 代码使用
