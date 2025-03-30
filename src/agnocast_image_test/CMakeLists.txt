@@ -49,7 +49,7 @@ target_link_libraries(rgba_show_zero_node
 )
 rclcpp_components_register_node(
   rgba_show_zero_node
-  PLUGIN "zero::ImageViewerNode"
+  PLUGIN "ImageViewerNode"
   EXECUTABLE rgba_show_zero_node_exe
 )
 

@@ -6,28 +6,11 @@
 #include "agnocast/agnocast.hpp"
 
 using std::placeholders::_1;
-namespace zero{
 
 class ImageViewerNode : public rclcpp::Node
 {
-public:
-  ImageViewerNode(const rclcpp::NodeOptions & options) : Node("image_viewer_node", options)
-  {
-    // 声明并获取参数
-    this->declare_parameter<std::string>("image_topic", "/camera/image_raw");
-    std::string topic = this->get_parameter("image_topic").as_string();
+  agnocast::Subscription<sensor_msgs::msg::Image>::SharedPtr image_sub_;
 
-    RCLCPP_INFO(this->get_logger(), "订阅图像话题: %s", topic.c_str());
-    rclcpp::CallbackGroup::SharedPtr group =
-      create_callback_group(rclcpp::CallbackGroupType::MutuallyExclusive);
-    agnocast::SubscriptionOptions agnocast_options;
-    agnocast_options.callback_group = group;
-
-    image_sub_ = agnocast::create_subscription<sensor_msgs::msg::Image>(
-      this, topic, 100, std::bind(&ImageViewerNode::image_callback, this, _1), agnocast_options);
-  }
-
-private:
   void image_callback(const agnocast::ipc_shared_ptr<sensor_msgs::msg::Image> & msg)
   {
     try {
@@ -49,11 +32,24 @@ private:
     }
   }
 
-  agnocast::Subscription<sensor_msgs::msg::Image>::SharedPtr image_sub_;
+public:
+  explicit ImageViewerNode(const rclcpp::NodeOptions & options) : Node("image_viewer_node", options)
+  {
+    // 声明并获取参数
+    this->declare_parameter<std::string>("image_topic", "/camera/image_raw");
+    std::string topic = this->get_parameter("image_topic").as_string();
 
+    rclcpp::CallbackGroup::SharedPtr group =
+      create_callback_group(rclcpp::CallbackGroupType::MutuallyExclusive);
+    agnocast::SubscriptionOptions agnocast_options;
+    agnocast_options.callback_group = group;
+    
+    RCLCPP_INFO(this->get_logger(), "订阅图像话题: %s", topic.c_str());
+    // qos超过50或者直接填写字符串变量topic，就报AGNOCAST_SUBSCRIBER_ADD_CMD failed: Invalid argument
+    image_sub_ = agnocast::create_subscription<sensor_msgs::msg::Image>(
+      this, topic.c_str(), 10, std::bind(&ImageViewerNode::image_callback, this, _1), agnocast_options);
+  }
 };
   
-};
-
 #include <rclcpp_components/register_node_macro.hpp>
-RCLCPP_COMPONENTS_REGISTER_NODE(zero::ImageViewerNode)
+RCLCPP_COMPONENTS_REGISTER_NODE(ImageViewerNode)

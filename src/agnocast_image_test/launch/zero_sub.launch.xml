@@ -1,8 +1,11 @@
 <launch>
-  <node pkg="agnocast_image_test" exec="rgba_publisher_zero_node" name="rgba_publisher_zero_node" output="screen">
+  <node_container pkg="agnocastlib" exec="agnocast_component_container" name="listener_container" namespace="" output="screen">
     <env name="LD_PRELOAD" value="libagnocast_heaphook.so:$(env LD_PRELOAD '')" />
-    <env name="MEMPOOL_SIZE" value="402653184" />  <!-- 128MB * 3 -->
-    <env name="AGNOCAST_MEMPOOL_SIZE" value="402653184"/>
-    <param name="image_topic" value="/camera/image_raw" />
-  </node>
+    <env name="MEMPOOL_SIZE" value="4026531840" /> 
+
+    <composable_node pkg="agnocast_image_test" plugin="ImageViewerNode" name="rgba_show_zero_node" namespace="">
+      <param name="image_topic" value="/camera/image_raw" />
+    </composable_node>
+  </node_container>
+
 </launch>

@@ -1,8 +1,7 @@
 <launch>
   <node pkg="agnocast_image_test" exec="rgba_publisher_zero_node" name="rgba_publisher_zero_node" output="screen">
     <env name="LD_PRELOAD" value="libagnocast_heaphook.so:$(env LD_PRELOAD '')" />
-    <env name="AGNOCAST_MEMPOOL_SIZE" value="402653184"/>
-    <env name="MEMPOOL_SIZE" value="402653184" />  <!-- 128MB * 3 -->
+    <env name="MEMPOOL_SIZE" value="4026531840" />  
     <param name="image_topic" value="/camera/image_raw" />
   </node>
 </launch>

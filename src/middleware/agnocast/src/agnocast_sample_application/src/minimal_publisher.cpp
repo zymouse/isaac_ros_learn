@@ -3,7 +3,7 @@
 #include "rclcpp/rclcpp.hpp"
 
 using namespace std::chrono_literals;
-const long long MESSAGE_SIZE = 1000ll * 1024;
+const long long MESSAGE_SIZE = 1920 * 1080 * 4;
 
 class MinimalPublisher : public rclcpp::Node
 {
@@ -18,8 +18,8 @@ class MinimalPublisher : public rclcpp::Node
       publisher_dynamic_->borrow_loaned_message();
 
     message->id = count_;
-    message->data.reserve(MESSAGE_SIZE / sizeof(uint64_t));
-    for (size_t i = 0; i < MESSAGE_SIZE / sizeof(uint64_t); i++) {
+    message->data.reserve(MESSAGE_SIZE);
+    for (size_t i = 0; i < MESSAGE_SIZE; i++) {
       message->data.push_back(i + count_);
     }
 
@@ -34,7 +34,7 @@ public:
 
     publisher_dynamic_ =
       agnocast::create_publisher<agnocast_sample_interfaces::msg::DynamicSizeArray>(
-        this, "/my_topic", 1);
+        this, "/my_topic", 10);
 
     timer_ = this->create_wall_timer(100ms, std::bind(&MinimalPublisher::timer_callback, this));
   }

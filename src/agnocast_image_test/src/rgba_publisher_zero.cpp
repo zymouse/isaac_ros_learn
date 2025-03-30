@@ -13,8 +13,11 @@ public:
     this->declare_parameter<std::string>("image_topic", "/camera/image_raw");
     std::string topic = this->get_parameter("image_topic").as_string();
 
-    publisher_ = agnocast::create_publisher<sensor_msgs::msg::Image>(this, topic, 100);
-    timer_ = this->create_wall_timer(std::chrono::milliseconds(30), std::bind(&CameraPublisher::publish_frame, this));
+    double publish_rate_hz = 15.0;  // 想发布多少 Hz，自由设定
+    auto interval = std::chrono::duration<double>(1.0 / publish_rate_hz);
+
+    publisher_ = agnocast::create_publisher<sensor_msgs::msg::Image>(this, topic, 10);
+    timer_ = this->create_wall_timer(interval, std::bind(&CameraPublisher::publish_frame, this));
 
     cap_.open("/dev/video0");
     if (!cap_.isOpened()) {
